@@ -31,15 +31,64 @@ for runner in range(0,input_dimension):
 
 component_sum = sum(radial_components)
 sphere_radius = np.sqrt(component_sum)
-print(sphere_radius)
+print('\nThe sphere in your space has radius: \n'+str(sphere_radius))
 
-
+# filling the empty space which has the same size as the given input
 space = np.empty(input_shape)
-for index in range(itertools.product()):
-    print('hello')
+
+#------------------------------------------------------------------------------#
+
+#for index in range(0,input_dimension):
+    #print(index)
+# go through all dimensions and combine all with all others using product
+#
+#for current_dimension in range(0,input_dimension):
+
+
+#for index in range(itertools.product(range(0,input_dimension))):
+    #print('hello')
+
+
     #sphere = 1 if point components smaller radius
     # sphere = 0 if bigger
 
+
+#for runner in range(0,input_dimension):
+ #   itertools.product(input_data[runner])
+
+
+
+#data_slices = []
+#for index in range(0,input_dimension):
+ #   data_slices.append(input_data[index])
+
+
+
+
+range_list = []
+big_list = []
+
+for counter in range(0, input_dimension):
+    dimension_range = input_shape[counter]
+    #print('here we are: '+str(dimension_range))
+    range_list.append(dimension_range)
+    big_list.append(np.arange(dimension_range))
+
+print('the big list is: '+str(big_list))
+
+print('The ranges are: '+str(range_list))
+
+
+#for dimension_in_question in range(0 , input_dimension):
+#    drange = np.arange(0 , input_shape[dimension_in_question])
+#    itertools.product([drange])
+
+# this is the space filled by the input in terms of points:
+for element in itertools.product(*big_list):
+    space_points = element
+    print(element)
+
+# calculation of radius of each point in this new space:
 
 
 
