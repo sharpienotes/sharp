@@ -96,6 +96,9 @@ for entry in range(0,len(space_map)):
     space_point = space_map(entry)
     space_radius =
 
+    #TODO compute sum of squares of entries and then square root
+    # TODO compare this with radius previously computed
+    # TODO then assign one or zero to the space itself and done
 
 
 
