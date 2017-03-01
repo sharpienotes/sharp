@@ -106,7 +106,7 @@ def sphere_convolutor(sphere_here,test):
 # -----------------------------------------------------------------------------#
 # FUNCTION THAT CONVOLUTES THE ORIGINAL DATA WITH SHERE BY MEANS OF FFT
 def other_sphere_convolutor(sphere_here, test):
-    'FUNCTION THAT CONVOLUTES THE ORIGINAL DATA WITH SHERE BY MEANS OF FFT'
+    #'FUNCTION THAT CONVOLUTES THE ORIGINAL DATA WITH SHERE BY MEANS OF FFT'
     temp = sphere_calculator(None, None, None) # center, radius, dimensions
     if not sphere_here:
         sphere_here = np.empty([3,3,3], dtype = complex)
