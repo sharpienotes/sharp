@@ -115,7 +115,7 @@ from scipy import signal
 
 # FUNCTION THAT CONVOLUTES WITH THE SPHERE AS CALCULATED BY SPHERE_CALCULATOR
 def sphere_convolutor(sphere_here,test):
-    'is the convolution with the sphere definied with sphere_calculator'
+
     temp = sphere_calculator() # center, radius, dimensions
     if not sphere_here:
         sphere_here = np.empty([3,3,3], dtype = complex)
