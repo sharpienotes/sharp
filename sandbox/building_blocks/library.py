@@ -13,12 +13,14 @@ for element in itertools.product([i],[j],repeat=2):
     aaa = new_list[1]
     print(aaa[1])
 
+print('######################################')
 # arrays and stuff:
 sphere_here = np.empty([3,3,3], dtype = complex)
 # note: random is between zero and one
 data_temp_proxy = np.random.random([3,3,3,5,4])
 a = np.arange(15).reshape(3, 5)
 print(a)
+print('######################################')
 print(a.ndim, a.shape)
 print(a.itemsize)
 print(a.size)
@@ -26,6 +28,8 @@ print(a.size)
 # b is called a tuple
 b = (1,2,3,4)
 print(len(b))
-
+print('######################################')
+sl = slice(*a)
+print(sl)
 
 
