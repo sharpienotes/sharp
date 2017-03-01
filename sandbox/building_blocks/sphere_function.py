@@ -1,42 +1,81 @@
 # IMPORTS:
+import itertools
 import numpy as np
+import scipy.ndimage
+
+data_temp_proxy = np.random.random([3,3,3,5,4])
+input_data = data_temp_proxy
+input_shape = input_data.shape
+print('Input shape is: '+str(input_shape))
+input_dimension = len(input_shape)
+print('\nDimension of input data: '+str(input_dimension))
+
+sphere_center = scipy.ndimage.measurements.center_of_mass(input_data)
+print('\nSphere center: \n'+str(sphere_center))
+
+
+multi_max = []
+maxima_list = []
+
+for axis in range(0,input_dimension):
+    multi_max_entries = np.amax(input_data, axis=axis)
+    multi_max.append(multi_max_entries)
+    maxima_list_entries = np.amax(multi_max_entries)
+    maxima_list.append(maxima_list_entries)
+print('\nMaxima: \n'+str(maxima_list) +'\n')
+
+
+radial_components = []
+for runner in range(0,input_dimension):
+    radial_components.append((maxima_list[runner]-sphere_center[runner])**2)
+
+component_sum = sum(radial_components)
+sphere_radius = np.sqrt(component_sum)
+print(sphere_radius)
+
+
+space = np.empty(input_shape)
+for index in range(itertools.product()):
+    print('hello')
+    #sphere = 1 if point components smaller radius
+    # sphere = 0 if bigger
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # -----------------------------------------------------------------------------#
 # -----------------------------------------------------------------------------#
 # DEFINITION OF THE FUNCTION:
-def sphere_calculator(center = None, radius = None, dimensions = None):
-    "calculates the definition of a sphere based on input"
-
+def sphere_calculator(center = (1,1,1), radius = 1, dimensions = (1,1,1)):
+    # TODO: input the right description
     # -------------------------------------------------------------------------#
-    if center == None:
-        center = (0, 0, 0)
+    # TODO: n dimensional case of input with itertools.product
+    if dimensions:
+        radius = dimensions[0]
 
-    if radius == None:
-        radius = 1
-        if dimensions:
-            radius = dimensions[0]
+    if radius:
+        dimensions = (radius, radius, radius)
 
-    if dimensions == None:
-        if radius == None:
-            dimensions = (1, 1, 1)
-        if radius:
-            dimensions = (radius, radius, radius)
-
-    # CENTERING:
-    # the x component of the center of the sphere
     x0 = center[0]
-    # the y component of the center of the sphere
     y0 = center[1]
-    # the z component of the center of the sphere
     z0 = center[2]
 
     # -------------------------------------------------------------------------#
 
     # SPAN OF SPHERE (i.e. maximal values in each direction, half-axis length):
-    # is the span of the sphere's x-axis component
     x_span = dimensions[0]
-    # is the span of the sphere's y-axis component
     y_span = dimensions[1]
-    # is the span of the sphere's z-axis component
     z_span = dimensions[2]
 
     # -------------------------------------------------------------------------#
@@ -63,10 +102,16 @@ def sphere_calculator(center = None, radius = None, dimensions = None):
             + ', has radius ' + str(radius) + ' and a span of '
             + str(dimensions)
             + ' in each corresponding direction from the center.')
+    sphere_parameters = [center, radius, dimensions]
+
+    # creation of a sphere in space
+    # TODO: space flexible to the n dimensional input dimensions and shapes!
+    space2 = np.empty([3,3,3])
 
 
-    list2 = [center, radius, dimensions]
-    return list2
+
+
+    return sphere_parameters
 
 
 # -----------------------------------------------------------------------------#
@@ -74,7 +119,7 @@ def sphere_calculator(center = None, radius = None, dimensions = None):
 # CALLING THE FUNCTION:
 #sphere_calculator((-4, -3, 0), 2, None)
 #sphere_calculator((1,1,1), None, None)
-sphere_calculator((-4, -3, 0), 2, None)
+sphere_calculator()
 # sphere_calculator((None, None, None))
 # sphere_calculator((None, 1, None))
 
