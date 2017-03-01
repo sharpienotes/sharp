@@ -84,13 +84,17 @@ print('The ranges are: '+str(range_list))
 #    itertools.product([drange])
 
 # this is the space filled by the input in terms of points:
+space_map = []
 for element in itertools.product(*big_list):
     space_points = element
-    print(element)
-
+    space_map.append(space_points)
+    #print(space_map)
+print(len(space_map))
 # calculation of radius of each point in this new space:
 
-
+for entry in range(0,len(space_map)):
+    space_point = space_map(entry)
+    space_radius =
 
 
 
