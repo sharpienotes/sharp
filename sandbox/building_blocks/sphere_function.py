@@ -13,7 +13,6 @@ print('\nDimension of input data: '+str(input_dimension))
 sphere_center = scipy.ndimage.measurements.center_of_mass(input_data)
 print('\nSphere center: \n'+str(sphere_center))
 
-
 multi_max = []
 maxima_list = []
 
@@ -36,35 +35,6 @@ print('\nThe sphere in your space has radius: \n'+str(sphere_radius)+'\n')
 # filling the empty space which has the same size as the given input
 space = np.empty(input_shape)
 
-#------------------------------------------------------------------------------#
-
-#for index in range(0,input_dimension):
-    #print(index)
-# go through all dimensions and combine all with all others using product
-#
-#for current_dimension in range(0,input_dimension):
-
-
-#for index in range(itertools.product(range(0,input_dimension))):
-    #print('hello')
-
-
-    #sphere = 1 if point components smaller radius
-    # sphere = 0 if bigger
-
-
-#for runner in range(0,input_dimension):
- #   itertools.product(input_data[runner])
-
-
-
-#data_slices = []
-#for index in range(0,input_dimension):
- #   data_slices.append(input_data[index])
-
-
-
-
 range_list = []
 # big list is the combination of all ranges of each dimension in space
 big_list = []
@@ -83,35 +53,28 @@ print('The space map at hand consists of '+str(len(space_map)) +' points. \n')
 
 
 # calculation of radius of each point in this new space:
+# the new space has the dimensions of the input but is not filled with data!
 
 # pick a specific point in space one at a time
-all_radii = []
-proxy = []
-running_square_sum = [] # not really necessary probably
-#radial_component_list = []
-
-
-# todo fix huge entries in new matrix by correct ones and at correct place
 radial_component_list=np.empty([len(space_map),2])
-
+total_radii_list_per_space_point = list()
 # pick a point in space
 for entry in range(0,len(space_map)):
     space_point = space_map[entry]
-    point_all_radial_comp = []
+    point_all_radial_comp = 0.0
+    radii_list = list()
     # walk through all its dimensions, one by one
-    # when there, sum up the square of the input minus the center component
     for dim in range(0, input_dimension):
         radial_component = (((space_point[dim])-sphere_center[dim]))**2
-        point_all_radial_comp += radial_component
-        radial_component_list[entry,1] == point_all_radial_comp
+        radii_list.append(radial_component)
+        radius_here = np.sqrt(sum(radii_list))
+    total_radii_list_per_space_point.append(radius_here)
 
+space_radius = max(total_radii_list_per_space_point)
+print('The radius of the artificial space is: '+str(space_radius))
 
-
-print(radial_component_list)
-#print(len(radial_component_list))
-#print('The space radius is: '+str(space_radius)+'\n')
-
-
+# comparing with previously computed radius
+#------------------------------------------------------------------------------#
     #TODO compute sum of squares of entries and then square root
     # TODO compare this with radius previously computed
     # TODO then assign one or zero to the space itself and done
@@ -119,6 +82,21 @@ print(radial_component_list)
 
 
 # print('TEST TEST TEST: '+str(space_point[1]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
