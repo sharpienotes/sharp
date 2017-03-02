@@ -31,7 +31,7 @@ for runner in range(0,input_dimension):
 
 component_sum = sum(radial_components)
 sphere_radius = np.sqrt(component_sum)
-print('\nThe sphere in your space has radius: \n'+str(sphere_radius))
+print('\nThe sphere in your space has radius: \n'+str(sphere_radius)+'\n')
 
 # filling the empty space which has the same size as the given input
 space = np.empty(input_shape)
@@ -66,35 +66,51 @@ space = np.empty(input_shape)
 
 
 range_list = []
+# big list is the combination of all ranges of each dimension in space
 big_list = []
 
 for counter in range(0, input_dimension):
     dimension_range = input_shape[counter]
-    #print('here we are: '+str(dimension_range))
     range_list.append(dimension_range)
     big_list.append(np.arange(dimension_range))
-
-print('the big list is: '+str(big_list))
-
-print('The ranges are: '+str(range_list))
-
-
-#for dimension_in_question in range(0 , input_dimension):
-#    drange = np.arange(0 , input_shape[dimension_in_question])
-#    itertools.product([drange])
 
 # this is the space filled by the input in terms of points:
 space_map = []
 for element in itertools.product(*big_list):
     space_points = element
     space_map.append(space_points)
-    #print(space_map)
-print(len(space_map))
+print('The space map at hand consists of '+str(len(space_map)) +' points. \n')
+
+
 # calculation of radius of each point in this new space:
 
+# pick a specific point in space one at a time
+all_radii = []
+proxy = []
+running_square_sum = [] # not really necessary probably
+#radial_component_list = []
+
+
+# todo fix huge entries in new matrix by correct ones and at correct place
+radial_component_list=np.empty([len(space_map),2])
+
+# pick a point in space
 for entry in range(0,len(space_map)):
-    space_point = space_map(entry)
-    space_radius =
+    space_point = space_map[entry]
+    point_all_radial_comp = []
+    # walk through all its dimensions, one by one
+    # when there, sum up the square of the input minus the center component
+    for dim in range(0, input_dimension):
+        radial_component = (((space_point[dim])-sphere_center[dim]))**2
+        point_all_radial_comp += radial_component
+        radial_component_list[entry,1] == point_all_radial_comp
+
+
+
+print(radial_component_list)
+#print(len(radial_component_list))
+#print('The space radius is: '+str(space_radius)+'\n')
+
 
     #TODO compute sum of squares of entries and then square root
     # TODO compare this with radius previously computed
@@ -102,7 +118,7 @@ for entry in range(0,len(space_map)):
 
 
 
-
+# print('TEST TEST TEST: '+str(space_point[1]))
 
 
 
