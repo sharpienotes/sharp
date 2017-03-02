@@ -27,9 +27,13 @@ print(a.size)
 
 # b is called a tuple
 b = (1,2,3,4)
-print(len(b))
+print('how to get the length of a tuple: '+str(len(b)))
+print('how to call an element in a tuple: '+str(b[1]))
 print('######################################')
 sl = slice(*a)
 print(sl)
 
 
+# common errors:
+# off by one in indexing
+# single = where one would need ==
