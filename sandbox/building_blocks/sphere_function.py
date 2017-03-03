@@ -4,7 +4,6 @@ import numpy as np
 import scipy.ndimage
 
 # todo: make this a function
-# todo: reduced space in spherical form from original data same size then convol.
 
 data_temp_proxy = np.random.random([3,3,3,5,4])
 input_data = data_temp_proxy
@@ -66,26 +65,21 @@ for entry in range(0,len(space_map)):
     total_radii_list_per_space_point.append(radius_here)
     #desired_radius = sphere_radius
     desired_radius = 2
-
+    # sphere_map is the boolean filled sphere, True in and False outside
     if radius_here < desired_radius:
-        sphere_map[entry] = space_map[entry] #(was boolean True)
+        sphere_map[entry] = True
         local_counter += 1
     else:
-        sphere_map[entry] = np.nan #(was boolean False)
+        sphere_map[entry] = False
         other_counter +=1
-
 #print(sphere_map[14])
 #complete_sphere = np.array(space_map,sphere_map)
-complete_sphere = list(zip(space_map,sphere_map))
 #print(len(sphere_map))
 # some print stuff:
 space_radius = max(total_radii_list_per_space_point)
 print('The maximal radius of the artificial space is: '+str(space_radius))
-print('All together are: '+str(local_counter))
-#print(complete_sphere)
-print(complete_sphere[539])
-print(other_counter)
-print(other_counter+local_counter)
-truelist = [entry for entry in complete_sphere if entry[1] == True]
-print(sphere_map)
+print('All True values together are: '+str(local_counter))
+true_sphere_map = sphere_map.reshape(input_shape)
+print(input_shape)
+print(true_sphere_map.shape)
 #------------------------------------------------------------------------------#
