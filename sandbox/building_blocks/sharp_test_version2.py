@@ -101,29 +101,24 @@ def main():
             sphere_map[entry] = False
 
     true_sphere_map = sphere_map.reshape(input_shape)
-    print(true_sphere_map.shape)
 
     # -------------------------------------------------------------------------#
     # PERFORM THE CONVOLUTION (I.E. MULTIPLICATION) OF SPHERE AND DATA
     import scipy
     from scipy import signal
-    # the sphere is: sphere_map
-    # scipy.signal.convolve(in1, in2, mode='full') (use mode same)
-    print(data_temp_proxy.shape)
-    #print("This is the space map: "+str(space_map))
-    # HERE HERE HERE HERE HERE HERE
+
     convolution = scipy.signal.convolve(data_temp_proxy, true_sphere_map, mode='same')
-    print(len(convolution))
-    # make one and zero out of booleans
-    # multiply that with the original space
-    print(convolution)
-    # reduced space in spherical form from original data same size then convol.
     # -------------------------------------------------------------------------#
     # SUBTRACT THE CONVOLUTION FROM THE ORIGINAL DATA (NOT TRANSFORMED!)
+    difference = temp_data_proxy - convolution
+    print("here we are: "+str(difference.shape))
 
     # -------------------------------------------------------------------------#
     # PERFORM THE DECONVOLUTION
-
+    # todo: here we are:
+    # cf: https://en.wikipedia.org/wiki/Richardson–Lucy_deconvolution
+    # deconvolve apparently does not work in more than one dimension!!
+    deconvolution = scipy.signal.deconvolve(difference, true_sphere_map)
 
     # -------------------------------------------------------------------------#
     # OUTPUT OF SHARP-CORRECTED DATA IN APPROPRIATE FORM:
