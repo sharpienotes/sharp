@@ -78,6 +78,7 @@ for entry in range(0,len(space_map)):
 #complete_sphere = np.array(space_map,sphere_map)
 complete_sphere = list(zip(space_map,sphere_map))
 #print(len(sphere_map))
+# some print stuff:
 space_radius = max(total_radii_list_per_space_point)
 print('The maximal radius of the artificial space is: '+str(space_radius))
 print('All together are: '+str(local_counter))
