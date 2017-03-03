@@ -33,6 +33,12 @@ print('######################################')
 sl = slice(*a)
 print(sl)
 
+# getting a list of two lists a and b:
+complete_sphere = list(zip(a,b))
+
+# getting a list of all values "True":
+truelist = [entry for entry in complete_sphere if entry[1] == True]
+
 
 # common errors:
 # off by one in indexing
