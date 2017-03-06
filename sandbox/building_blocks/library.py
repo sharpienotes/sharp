@@ -46,7 +46,7 @@ truelist = [entry for entry in complete_sphere if entry[1] == True]
 
 # defining a function:
 # if want to be able to call empty, function() then specifying as follows is a good idea:
-def function(a=None, b=None):
+def function(a=None, b=None, point=None):
     """
 
     Args:
@@ -60,10 +60,17 @@ def function(a=None, b=None):
         a=5
     if not b:
         b=6
+
+    # if want to leave this empty but the parameter is an array:
+    # use:
+    if point is None:
+        point = (1,2,3)
+
+    other_point = point + a
+    print(other_point)
+
     return a+b
 
 function() # calls the function without specified non-default parameters
-# if want to leave this empty but the parameter is an array:
-# use:
-if point is not:
-    point = (1,2,3)
+
+
