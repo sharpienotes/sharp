@@ -10,10 +10,19 @@ def sharp_filter(
         input_data ():     data that is to be filtered using SHARP
         sphere_center ():  center of sphere used for performing the filtering,
                            by default the center of the input data
-        desired_sphere_radius (): the radius of the sphere that is used for filtering
+        desired_sphere_radius ():
+                           the radius of the sphere that is used for filtering
 
     Returns:
                            input data after filter is applied in same shape
+
+    Procedure:
+    a) get the shape, center etc of the input
+    b) create a sphere in that space
+    c) Fourier transform the sphere and the input
+    d) multiply the two
+    e) subtract the result of d) from the original input
+    f) inverse Fourier transform the result of e) to get the result
 
     """
 
@@ -21,6 +30,7 @@ def sharp_filter(
     import itertools
     import scipy.ndimage
 
+    # INITIAL ASSESSMENT OF INPUT DATA
     if input_data is None:
         data_temp_proxy = np.random.random([3, 3, 3, 5, 4])
         input_data = data_temp_proxy
@@ -32,6 +42,7 @@ def sharp_filter(
     if sphere_center == None:
         sphere_center = center_mass
 
+    # CREATION OF THE SPACE THE SPHERE WILL LIVE IN:
     range_list = []
     # big list is the combination of all ranges of each dimension in space
     big_list = []
@@ -41,7 +52,7 @@ def sharp_filter(
         range_list.append(dimension_range)
         big_list.append(np.arange(dimension_range))
 
-    # this is the space filled by the input in terms of points:
+    # space_map is the space filled by the input in terms of points:
     space_map = []
 
     for element in itertools.product(*big_list):
@@ -50,14 +61,14 @@ def sharp_filter(
 
     if desired_sphere_radius == None:
             desired_sphere_radius = 2
-    # pick a specific point in space one at a time
+    # WALK THROUGH POINTS IN NEW SPACE ONE AT A TIME
     total_radii_list_per_space_point = list()
     sphere_map = np.zeros([len(space_map)], dtype=bool)
     for entry in range(0, len(space_map)):
         space_point = space_map[entry]
         radii_list = list()
 
-        # walk through all its dimensions, one by one
+        # WALK THROUGH ALL DIMENSIONS ONE BY ONE
         for dim in range(0, input_dimension):
             radial_component = (((space_point[dim]) - sphere_center[dim])) ** 2
             radii_list.append(radial_component)
@@ -65,7 +76,7 @@ def sharp_filter(
 
         total_radii_list_per_space_point.append(radius_here)
 
-        # sphere_map is boolean filled space, True in and False outside sphere
+        # CREATION OF BOOLEAN SPHERE, TRUE INSIDE, FALSE OUTSIDE OF SPHERE
         if radius_here < desired_sphere_radius:
             sphere_map[entry] = True
         else:
