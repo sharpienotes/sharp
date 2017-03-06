@@ -27,16 +27,11 @@ def sharp_filter(
 
     center_mass = scipy.ndimage.measurements.center_of_mass(input_data)
     input_shape = input_data.shape
-    print('Input shape is: ' + str(input_shape))
     input_dimension = len(input_shape)
-    print('\nDimension of input data: ' + str(input_dimension))
 
     if sphere_center == None:
         sphere_center = center_mass
-    print('\nSphere center: \n' + str(sphere_center))
 
-
-    # filling the empty space which has the same size as the given input:
     range_list = []
     # big list is the combination of all ranges of each dimension in space
     big_list = []
@@ -52,24 +47,16 @@ def sharp_filter(
     for element in itertools.product(*big_list):
         space_points = element
         space_map.append(space_points)
-    print('The space map at hand consists of ' + str(
-        len(space_map)) + ' points. \n')
 
-    # same dimensions as the input but filled with sphere
-    sphere_map = space_map
-
-    # calculation of radius of each point in this new space:
-    # the new space has the dimensions of the input but is not filled with data!
     if desired_sphere_radius == None:
             desired_sphere_radius = 2
     # pick a specific point in space one at a time
-    radial_component_list = np.empty([len(space_map), 2])
     total_radii_list_per_space_point = list()
     sphere_map = np.zeros([len(space_map)], dtype=bool)
     for entry in range(0, len(space_map)):
         space_point = space_map[entry]
-        point_all_radial_comp = 0.0
         radii_list = list()
+
         # walk through all its dimensions, one by one
         for dim in range(0, input_dimension):
             radial_component = (((space_point[dim]) - sphere_center[dim])) ** 2
@@ -78,7 +65,7 @@ def sharp_filter(
 
         total_radii_list_per_space_point.append(radius_here)
 
-        # sphere_map is the boolean filled sphere, True in and False outside
+        # sphere_map is boolean filled space, True in and False outside sphere
         if radius_here < desired_sphere_radius:
             sphere_map[entry] = True
         else:
@@ -86,8 +73,7 @@ def sharp_filter(
 
     true_sphere_map = sphere_map.reshape(input_shape)
 
-    # -------------------------------------------------------------------------#
-    # PERFORM THE FFT OF SPHERE AND DATA AND MULTIPLY THE TWO (= convolution)
+    # PERFORM THE FFT OF SPHERE AND DATA AND MULTIPLY THE TWO (~ convolution)
     import scipy
     from scipy import fftpack
 
@@ -95,16 +81,13 @@ def sharp_filter(
     sphere_fft = scipy.fftpack.fftn(true_sphere_map)
     convolution = data_fft * sphere_fft
 
-    # -------------------------------------------------------------------------#
-    # SUBTRACT THE CONVOLUTION FROM THE ORIGINAL DATA (NOT TRANSFORMED!)
+    # SUBTRACT THE 'CONVOLUTION' FROM THE ORIGINAL RAW DATA
     difference = input_data - convolution
 
-    # -------------------------------------------------------------------------#
     # PERFORM INVERSE FOURIER TRANSOFRM
     modified_data_back_fft = scipy.fftpack.ifftn(difference)
-    result = modified_data_back_fft
-    print(result.shape)
-    return result
+    filtered_data = modified_data_back_fft
+    return filtered_data
 
 sharp_filter(np.random.random([3, 3, 3, 5, 4]), (0,0,0,0,0), 1)
-#sharp_filter() # works! =)
+#sharp_filter()
