@@ -43,3 +43,27 @@ truelist = [entry for entry in complete_sphere if entry[1] == True]
 # common errors:
 # off by one in indexing
 # single = where one would need ==
+
+# defining a function:
+# if want to be able to call empty, function() then specifying as follows is a good idea:
+def function(a=None, b=None):
+    """
+
+    Args:
+        a ():
+        b ():
+
+    Returns: the sum of a and b
+
+    """
+    if not a:
+        a=5
+    if not b:
+        b=6
+    return a+b
+
+function() # calls the function without specified non-default parameters
+# if want to leave this empty but the parameter is an array:
+# use:
+if point is not:
+    point = (1,2,3)
