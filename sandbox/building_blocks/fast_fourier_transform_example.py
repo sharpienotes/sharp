@@ -34,3 +34,9 @@ a = np.fft.fftn(c)
 
 # creates an output of the transformation
 #print('\n FFT of an empty array gives: ' + str(a))
+
+#norm of a vector or array in numpy (returns a single value):
+norm_part = np.linalg.norm(data_proxy)
+# absolute value (leaves the size unchanged):
+a = abs(data_proxy)
+  
